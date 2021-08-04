@@ -55,6 +55,57 @@ table tr:last-child{
 	vertical-align: top;
 }
 </style>
+<script type="text/javascript">
+$(document).ready(function(){
+	//수정하기 기능
+	$(".modifyInput").click(function(){
+		//var fcontent = $(this).children().first().text();
+		//var fcno = $(this).children().last().text();
+		//변경
+		var accontent = $(this).children(".accontent").text();
+		var ano = $(this).children(".ano").text();
+		var acno = $(this).children(".acno").text();
+		$(this).parent().html(
+				"<form action='./actionCommentModify' method='post'>"
+				+"<textarea name='accontent'>"+accontent+"</textarea>"
+				+"<input type='hidden' name='acno' value='"+acno+"'>"
+				+"<input type='hidden' name='ano' value='"+ano+"'>"
+				+"<button>수정하기</button>"
+				+"</form>"
+				+"<div class='clear1'>수정취소</div>");
+				//content변경 + 댓글번호
+	$(".clear1").click(function(){
+		//alert(htmlB);
+		$(this).parent().html(
+				'<div class="modifyInput">수정하기'
+		 		+'<div class="accontent">'+accontent+'</div>'
+		 		+'<div class="ano" style="display: none;">'+ano+'</div>'
+		 		+'<div class="acno" style="display: none;">'+acno+'</div>'
+			 	+'</div>');
+	});
+	});
+	
+	
+	//댓글쓰는 기능
+	var now = 0;
+	   $("#commentInput").hide();
+	   $(".commentWrite").bind("click focus",function(){
+	      var offset = $(".commentWrite").offset();
+	      $("html, body").animate({scrollTop:offset.top},900);
+	      if (now == 0) {      
+	         $("#commentInput").slideDown(1000);
+	         $("#commentInput").html('<form action="./commentInput" method="post"><textarea name="accontent"></textarea><input type="hidden" name="ano" value="${list.ano }"><button>댓글쓰기</button></form>');
+	         $(this).text("닫으려면 클릭하세요.▲");
+	         now = 1;
+	      } else {
+	         $("#commentInput").slideUp(1000);
+	         $(this).text("댓글을 쓰려면 클릭하세요.▼");
+	         now = 0;
+	      }
+	   });
+
+});
+</script>
 </head>
 <body>
 	<h1 style="text-align: center;">상세보기</h1>
@@ -64,14 +115,23 @@ table tr:last-child{
 			<table border="1">
 				<tr>
 					<th id="title">제목</th>
-					<td>${list.atitle }</td>
+					<td>${list.atitle }
+					<c:if test="${sessionScope.id eq list.id }">
+					<form action="./actionBoardDelete" method="post">
+						<button type="submit">삭제</button>
+						<input type="hidden" name="ano" value="${list.ano }">
+					</form>
+						<button onclick="location.href='./actionBoardModify?ano=${list.ano}'">수정</button>
+					</c:if> 
+					</td>
+					
 				</tr>
 				<tr>
 					<th id="id">작성자</th>
 					<td>${list.name }(${list.id })</td>
 				</tr>
 				<tr>
-					<th id="date">쓴날짜</th>
+					<th id="date">쓴날짜</th>	
 					<td>${list.adate }</td>
 				</tr>
 				<tr>
@@ -105,9 +165,9 @@ table tr:last-child{
 					<div class="modifyBox">
 						<div class="modifyInput">
 					 		수정하기
-					 		<div class="acontent">${i.accontent }</div>
+					 		<div class="accontent">${i.accontent }</div>
 					 		<div class="ano" style="display: none;">${i.ano }</div>
-					 		<div class="acno" style="dis;ay: none;">${i.acno }</div>
+					 		<div class="acno" style="display: none;">${i.acno }</div>
 					 	</div>
 					 </div>
 					 <hr>
@@ -121,9 +181,9 @@ table tr:last-child{
 		<div class="commentWrite">댓글을 작성하려면 클릭하세요.▼</div>
 		</c:if>
 		<div id="commentInput">
-			<form action="./actionComment" method="post">
-				<textarea name="content"></textarea>
-				<input type="hidden" name="ano" value="${list.acno }">
+			<form action="actionCommentWrite" method="post">
+				<textarea name="accontent"></textarea>
+				<input type="hidden" name="ano" value="${list.ano }">
 				<button>댓글 작성</button>
 			</form>
 		</div>
