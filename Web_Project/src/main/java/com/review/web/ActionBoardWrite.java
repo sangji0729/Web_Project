@@ -65,12 +65,12 @@ public class ActionBoardWrite extends HttpServlet {
 				System.out.println("저장시 이름 : " + saveFile); 
 				
 				//저장시켜주세요
-				
+				if(saveFile != null) {//첨부파일이 없을경우 javax.imageio.IIOException: Can't read input file! 에러가 발생하여
+									  //if문으로 잡아주었음
 				//썸네일 만들겠습니다.
 				String thumbnailPath = path + "thumbnail" + File.separator;
 				//C:\workspaceJSP\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jul19web/upload/파일명
-				BufferedImage inputImg 
-								= ImageIO.read(new File(realPath + saveFile));
+				BufferedImage inputImg = ImageIO.read(new File(realPath + saveFile));
 				
 				//가로세로 크기 지정
 				int width = 160;
@@ -97,7 +97,7 @@ public class ActionBoardWrite extends HttpServlet {
 					ImageIO.write(outputImg, format, thumb);
 					fos.close();
 				}
-				
+				}
 				
 				//객체 생성
 				HashMap<String, Object> map = new HashMap<String, Object>();
@@ -116,7 +116,11 @@ public class ActionBoardWrite extends HttpServlet {
 				ActionBoardDAO dao = ActionBoardDAO.getInstance();
 				int result = dao.write(map);
 				//페이지 이동
-				response.sendRedirect("actionBoard");
+				if(result == 1) {
+					response.sendRedirect("actionBoard");					
+				}else {
+					response.sendRedirect("./error?code=WriteError");
+				}
 			}
 
 }

@@ -27,7 +27,7 @@ public class ActionBoardCommentDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (int)map.get("ano"));
-			pstmt.setString(2, (String)map.get("content"));
+			pstmt.setString(2, (String)map.get("accontent"));
 			pstmt.setString(3, (String)map.get("ip"));
 			pstmt.setString(4, (String)map.get("id"));
 			result = pstmt.executeUpdate();
@@ -58,6 +58,27 @@ public class ActionBoardCommentDAO {
 		}finally {
 			Util.closeAll(null, pstmt, conn);
 		}
+		return result;
+	}
+
+
+	public int commentDelete(HashMap<String, Object> map) {
+		int result = 0;
+		Connection conn = DBConnection.dbConnection();
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM ActionComment WHERE acno=? AND no=(SELECT no FROM Login WHERE id=?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int)map.get("acno"));
+			pstmt.setString(2, (String)map.get("id"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(null, pstmt, conn);
+		}
+		
 		return result;
 	}
 }

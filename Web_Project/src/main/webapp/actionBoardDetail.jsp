@@ -65,46 +65,36 @@ $(document).ready(function(){
 		var accontent = $(this).children(".accontent").text();
 		var ano = $(this).children(".ano").text();
 		var acno = $(this).children(".acno").text();
+		var id = $(this).children(".id").text();
+		
 		$(this).parent().html(
+				//"<c:if test='${sessionScope.id eq "+id+"}'>"
 				"<form action='./actionCommentModify' method='post'>"
 				+"<textarea name='accontent'>"+accontent+"</textarea>"
 				+"<input type='hidden' name='acno' value='"+acno+"'>"
 				+"<input type='hidden' name='ano' value='"+ano+"'>"
 				+"<button>수정하기</button>"
 				+"</form>"
-				+"<div class='clear1'>수정취소</div>");
+				//+"</c:if>"
+				+"<div class='clear1'><button>수정취소</button></div>");
 				//content변경 + 댓글번호
 	$(".clear1").click(function(){
 		//alert(htmlB);
 		$(this).parent().html(
-				'<div class="modifyInput">수정하기'
+				//"<c:if test='${sessionScope.id eq "+id+"}'>"
+				+'<div class="modifyInput">수정하기'
 		 		+'<div class="accontent">'+accontent+'</div>'
 		 		+'<div class="ano" style="display: none;">'+ano+'</div>'
 		 		+'<div class="acno" style="display: none;">'+acno+'</div>'
 			 	+'</div>');
+			 	//+"</c:if>");
 	});
 	});
+});
 	
 	
 	//댓글쓰는 기능
-	var now = 0;
-	   $("#commentInput").hide();
-	   $(".commentWrite").bind("click focus",function(){
-	      var offset = $(".commentWrite").offset();
-	      $("html, body").animate({scrollTop:offset.top},900);
-	      if (now == 0) {      
-	         $("#commentInput").slideDown(1000);
-	         $("#commentInput").html('<form action="./commentInput" method="post"><textarea name="accontent"></textarea><input type="hidden" name="ano" value="${list.ano }"><button>댓글쓰기</button></form>');
-	         $(this).text("닫으려면 클릭하세요.▲");
-	         now = 1;
-	      } else {
-	         $("#commentInput").slideUp(1000);
-	         $(this).text("댓글을 쓰려면 클릭하세요.▼");
-	         now = 0;
-	      }
-	   });
-
-});
+	
 </script>
 </head>
 <body>
@@ -144,6 +134,18 @@ $(document).ready(function(){
 					<c:if test="${list.afilename ne null }">
 					<img alt="img" src="./upload/${list.afilename }" width="50%">
 					</c:if>
+					<div id="like">
+					<form action="./actionBoardLike" method="post">
+					<c:if test="${sessionScope.id ne null }">
+						<button type="submit">추천</button> [ 추천 : ${list.alike } ]
+						<input type="hidden" name="no" value="${list.no }">
+						<input type="hidden" name="ano" value="${list.ano }">
+						<input type="hidden" name="alike" value="${list.alike }">
+						<input type="hidden" name="id" value="${list.id }">
+						<input type="hidden" name="name" value="${list.name }"><br>
+					</c:if>
+					</form>
+					</div>
 					 </td>
 				</tr>
 			</table>
@@ -164,12 +166,23 @@ $(document).ready(function(){
 					${i.acdate }
 					<div class="modifyBox">
 						<div class="modifyInput">
-					 		수정하기
+						<c:if test="${sessionScope.id eq i.id }">
+					 		<button type="submit">수정하기</button>
+						</c:if>
 					 		<div class="accontent">${i.accontent }</div>
 					 		<div class="ano" style="display: none;">${i.ano }</div>
 					 		<div class="acno" style="display: none;">${i.acno }</div>
+					 		<div class="id" style="display: none;">${i.id }</div>
 					 	</div>
 					 </div>
+					 <c:if test="${sessionScope.id eq i.id }">
+					 <form action="./actionCommentDelete" method="post">
+					 	<button>삭제하기</button>
+					 	<input type="hidden" name="acno" value="${i.acno }">
+					 	<input type="hidden" name="ano" value="${i.ano }">
+					 	<input type="hidden" name="accontent" value="${i.accontent }">
+					 </form>
+					 </c:if>
 					 <hr>
 				</c:forEach>	
 			</c:when>
@@ -178,15 +191,18 @@ $(document).ready(function(){
 			</c:otherwise>
 		</c:choose>
 		<c:if test="${sessionScope.id ne null }">
-		<div class="commentWrite">댓글을 작성하려면 클릭하세요.▼</div>
-		</c:if>
+		<!-- <div class="commentWrite">댓글을 작성하려면 클릭하세요.▼</div> -->
+		
 		<div id="commentInput">
 			<form action="actionCommentWrite" method="post">
-				<textarea name="accontent"></textarea>
+				<textarea name="accontent" placeholder="댓글을 입력해주세요"></textarea>
 				<input type="hidden" name="ano" value="${list.ano }">
+				<input type="hidden" name="id" value="${list.id }">
+				<input type="hidden" name="name" value="${list.name }">
 				<button>댓글 작성</button>
 			</form>
 		</div>
+		</c:if>
 </div>
 			<button id="boardreturn" onclick="location.href='./actionBoard'">게시판으로</button>
 		</div>	

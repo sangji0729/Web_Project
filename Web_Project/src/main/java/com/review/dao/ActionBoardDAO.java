@@ -44,6 +44,7 @@ public class ActionBoardDAO {
 					map.put("adate", rs.getDate("adate"));
 					map.put("aip", rs.getString("aip"));
 					map.put("acount", rs.getInt("acount"));
+					map.put("alike", rs.getInt("alike"));
 					map.put("no", rs.getInt("no"));
 					map.put("id", rs.getString("id"));
 					map.put("name", rs.getString("name"));
@@ -110,6 +111,7 @@ public class ActionBoardDAO {
 					map.put("aip", rs.getString("aip"));
 					map.put("acount", rs.getInt("acount"));
 					map.put("afilename", rs.getString("afilename"));
+					map.put("alike", rs.getInt("alike"));
 					map.put("no", rs.getInt("no"));
 					map.put("id", rs.getString("id"));
 					map.put("name", rs.getString("name"));
@@ -281,5 +283,44 @@ public class ActionBoardDAO {
 		return map;
 	}
 
+	public int likeUp(HashMap<String, Object> map) {
+		int result = 0;
+		Connection conn = DBConnection.dbConnection();
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE Action SET alike=alike+1 WHERE ano=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int)map.get("ano"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(null, pstmt, conn);
+		}
+		
+		return result;
+	}
+
+	public int LikeUpCheck(HashMap<String, Object> map) {
+		int result = 0;
+		Connection conn = DBConnection.dbConnection();
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO ActionLike (no, ano, aip) VALUES (?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int)map.get("no"));
+			pstmt.setInt(2, (int)map.get("ano"));
+			pstmt.setString(3, (String)map.get("aip"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(null, pstmt, conn);
+		}
+		
+		return result;
+	}
 	
 }

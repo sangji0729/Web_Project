@@ -130,7 +130,10 @@ ul, li {
 								</c:choose>
 						</a> <a href="./actionBoardDetail?ano=${l.ano }"> ${l.atitle } <c:if
 									test="${l.commentcount > 0}">
-									<small> [${l.commentcount }]</small>
+									<small> [ 댓글수 : ${l.commentcount } ]</small>
+								</c:if>
+								<c:if test="${l.alike > 0 }">
+								<small>[ 추천수 : ${l.alike } ]</small>
 								</c:if>
 						</a></li>
 						<li>${l.name }</li>

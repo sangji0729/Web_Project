@@ -34,28 +34,28 @@ public class ActionCommentWrite extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
-		//System.out.println(session.getAttribute("id"));
-		//System.out.println(session.getAttribute("name"));
-		//System.out.println(request.getParameter("ano"));
-		//System.out.println(Util.str2Int2(request.getParameter("ano")));
-		//System.out.println(request.getParameter("content"));
+		System.out.println(session.getAttribute("id"));
+		System.out.println(session.getAttribute("name"));
+		System.out.println(request.getParameter("ano"));
+		System.out.println(Util.str2Int2(request.getParameter("ano")));
+		System.out.println(request.getParameter("accontent"));
 		
-		if(request.getParameter("content") != null
+		if(request.getParameter("accontent") != null
 				&& request.getParameter("ano") != null
 				&& (Util.str2Int(request.getParameter("ano")) != 0)
 				&& session.getAttribute("id") != null
 				&& session.getAttribute("name") != null) {
 			
 			String id = (String)session.getAttribute("id");
-			String content = request.getParameter("content");
+			String accontent = request.getParameter("accontent");
 			int ano = Util.str2Int(request.getParameter("ano"));
 			String ip = Util.getIP(request);
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			content = Util.strRe(content);
+			accontent = Util.strRe(accontent);
 			
 			map.put("id", id);
-			map.put("content", content);
+			map.put("accontent", accontent);
 			map.put("ano", ano);
 			map.put("ip", ip);
 			ActionBoardCommentDAO dao = ActionBoardCommentDAO.getInstance();
