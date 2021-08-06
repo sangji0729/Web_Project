@@ -26,6 +26,8 @@ public class ActionCommentDelete extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+	
 	}
 
 	
@@ -65,7 +67,5 @@ public class ActionCommentDelete extends HttpServlet {
 				response.sendRedirect("./error?code=CommentDeleteError");
 			}
 		}
-		
 	}
-
 }

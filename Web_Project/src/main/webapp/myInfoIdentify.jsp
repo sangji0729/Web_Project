@@ -1,27 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>액션</title>
+<title>작성한 글 조회</title>
 <style type="text/css">
 a:link {
 	text-decoration: none;
 }
-
-#writebtn {
-	float: right;
-	margin-bottom: 10px;
-	margin-left: 20px;
-	width: 100px;
-	height: 30px;
-}
-
 #boardlist {
 	margin: 0 auto;
 	padding: 0;
@@ -90,31 +80,23 @@ ul, li {
 #paging{
 	margin: 0 auto;
 	padding: 0;
-	vertical-align: middle;
-	text-align: center;
 	margin-bottom: 10px;
+	text-align: center;
+}
+#boardreturnbtn{
+	float: right;
+	vertical-align: middle;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	height: 30px;
+	width: 150px;
 }
 </style>
-
 </head>
 <body>
-	<h1 style="text-align: center;">액션</h1>
+	<h1>내가 작성한 글 조회</h1>
 	<hr>
-	<br>
-
-	<c:if test="${sessionScope.id eq null }">
-		<button onclick="location.href='./login.jsp'">로그인하기</button>
-	</c:if>
-	<c:if test="${sessionScope.id ne null }">
-		<button onclick="location.href='./logout'">로그아웃</button>
-		<div>
-		<button onclick="location.href='./myinfo.jsp'">My Info</button>
-		<input type="hidden" name="ano" value="${list.ano }">
-		</div>
-	</c:if>
-	
-	<hr>
-	<div id="mainWrapper">
+<div id="mainWrapper">
 		<ul id="ulTable">
 			<li>
 				<ul>
@@ -157,14 +139,12 @@ ul, li {
 				<hr>
 				<br>
 			</c:forEach>
-			<c:if test="${sessionScope.id ne null }">
-				<button id="writebtn" onclick="location.href='./actionBoardWrite'">글작성</button>
-			</c:if>
 		</ul>
+				<button id="boardreturnbtn" onclick="location.href='./actionBoard'">액션 게시판으로</button>
 	</div>
 			<div id="paging">
 				<!-- 이동할 때 마다 페이지명을 변수처리 -->
-				<c:set var="pageName" value="actionBoard" scope="request" />
+				<c:set var="pageName" value="myInfoIdentify" scope="request" />
 				<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
 				<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
 				<c:import url="paging.jsp" />
@@ -172,7 +152,6 @@ ul, li {
 				<!-- 전체페이지 : ${totalPage } / 페이지 : ${page } / 시작 : / 끝 :<br> -->
 
 			</div>
-
 
 </body>
 </html>

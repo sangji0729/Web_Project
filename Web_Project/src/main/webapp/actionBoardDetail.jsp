@@ -56,6 +56,7 @@ table tr:last-child{
 }
 </style>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	//수정하기 기능
 	$(".modifyInput").click(function(){
@@ -126,7 +127,7 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<th id="count">조회수</th>
-					<td>${list.acount }</td>
+					<td>${list.acount + 1 }</td>
 				</tr>
 				<tr>
 					<th id="content">내용</th>
@@ -176,12 +177,14 @@ $(document).ready(function(){
 					 	</div>
 					 </div>
 					 <c:if test="${sessionScope.id eq i.id }">
+					
 					 <form action="./actionCommentDelete" method="post">
 					 	<button>삭제하기</button>
 					 	<input type="hidden" name="acno" value="${i.acno }">
 					 	<input type="hidden" name="ano" value="${i.ano }">
 					 	<input type="hidden" name="accontent" value="${i.accontent }">
-					 </form>
+					</form>
+					 
 					 </c:if>
 					 <hr>
 				</c:forEach>	

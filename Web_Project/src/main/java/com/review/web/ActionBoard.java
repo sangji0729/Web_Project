@@ -37,13 +37,18 @@ public class ActionBoard extends HttpServlet {
 		ArrayList<HashMap<String, Object>> list =  ActionBoardDAO.getInstance().boardList((page - 1 ) * 5);
 		request.setAttribute("list", list);
 		
+		
+		
 		if(list != null && list.size() > 0) {
 			request.setAttribute("totalCount", list.get(0).get("totalcount"));
 		}
 		//page보내기
 		request.setAttribute("page", page);
 		
-		rd.forward(request, response);
+		
+			rd.forward(request, response);
+			
+		
 	}
 	
 

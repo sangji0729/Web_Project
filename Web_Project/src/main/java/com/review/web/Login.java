@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.review.Util.Util;
+import com.review.dao.LogDAO;
 import com.review.dao.LoginDAO;
+
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
@@ -50,6 +53,15 @@ public class Login extends HttpServlet {
 			System.out.println("로그인한 비밀번호 : " + session.getAttribute("pw"));
 			System.out.println("로그인한 등급 : " + session.getAttribute("grade"));
 
+			//로그남기기
+			HashMap<String, Object> log = new HashMap<String, Object>();
+			log.put("id", id);
+			log.put("target", "로그인");
+			log.put("etc", "로그인 성공");
+			log.put("ip", Util.getIP(request));
+			LogDAO.insertLog(log);
+			
+			
 			response.sendRedirect("./actionBoard");
 
 		} else {

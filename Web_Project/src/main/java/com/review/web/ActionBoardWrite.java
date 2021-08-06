@@ -20,6 +20,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.review.Util.Util;
 import com.review.dao.ActionBoardDAO;
+import com.review.dao.LogDAO;
  
 
 @WebServlet("/actionBoardWrite")
@@ -111,6 +112,15 @@ public class ActionBoardWrite extends HttpServlet {
 				//ID값도 보내겠습니다 
 				HttpSession session = request.getSession();
 				map.put("id", session.getAttribute("id"));
+				
+				//로그남기기
+				String id = (String)session.getAttribute("id");
+				HashMap<String, Object> log = new HashMap<String, Object>();
+				log.put("id", id);
+				log.put("target", "게시글 작성");
+				log.put("etc", "제목 : " + title);
+				log.put("ip", Util.getIP(request));
+				LogDAO.insertLog(log);
 				
 				//DAO호출
 				ActionBoardDAO dao = ActionBoardDAO.getInstance();
