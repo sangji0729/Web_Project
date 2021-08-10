@@ -108,8 +108,8 @@ ul, li {
 	<c:if test="${sessionScope.id ne null }">
 		<button onclick="location.href='./logout'">로그아웃</button>
 		<div>
-		<button onclick="location.href='./myinfo.jsp'">My Info</button>
-		<input type="hidden" name="ano" value="${list.ano }">
+		<button onclick="location.href='./myinfomenu.jsp'">My Info</button>
+		
 		</div>
 	</c:if>
 	
@@ -138,7 +138,7 @@ ul, li {
 									<c:otherwise>
 										<img alt="thumb" src="./thumbnail/${l.athumbnail }"
 											style="vertical-align: middle; height: 100px;">
-										${l.gtitle }
+										
 											</c:otherwise>
 								</c:choose>
 						</a> <a href="./actionBoardDetail?ano=${l.ano }">${l.atitle } <c:if

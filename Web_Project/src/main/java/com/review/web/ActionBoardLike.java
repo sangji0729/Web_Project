@@ -67,7 +67,10 @@ public class ActionBoardLike extends HttpServlet {
 				}
 			}else {
 				//이미 추천을 한번 했다면 에러발생페이지로 넘어감 추후 알림창으로 바꿀예정
-				response.sendRedirect("./error?code=AlreadyLike");
+				response.sendRedirect("./actionBoardDetail?ano="+ano);
+
+
+				
 			}
 		}
 	}

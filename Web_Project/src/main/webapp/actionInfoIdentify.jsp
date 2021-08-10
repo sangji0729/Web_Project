@@ -94,13 +94,14 @@ ul, li {
 </style>
 </head>
 <body>
-	<h1>내가 작성한 글 조회</h1>
+	<h1 style="text-align: center;">Action 게시판 작성한 글 조회</h1>
 	<hr>
+	<c:import url="./myinfomenu.jsp" />
 <div id="mainWrapper">
 		<ul id="ulTable">
 			<li>
 				<ul>
-					<li>번호</li>
+					<li>게시판</li>
 					<li>제목</li>
 					<li>글쓴이</li>
 					<li>날짜</li>
@@ -120,7 +121,6 @@ ul, li {
 									<c:otherwise>
 										<img alt="thumb" src="./thumbnail/${l.athumbnail }"
 											style="vertical-align: middle; height: 100px;">
-										${l.gtitle }
 											</c:otherwise>
 								</c:choose>
 						</a> <a href="./actionBoardDetail?ano=${l.ano }">${l.atitle } <c:if
@@ -140,11 +140,11 @@ ul, li {
 				<br>
 			</c:forEach>
 		</ul>
-				<button id="boardreturnbtn" onclick="location.href='./actionBoard'">액션 게시판으로</button>
+				<button id="boardreturnbtn" onclick="location.href='./index'">메인메뉴로 돌아가기</button>
 	</div>
 			<div id="paging">
 				<!-- 이동할 때 마다 페이지명을 변수처리 -->
-				<c:set var="pageName" value="myInfoIdentify" scope="request" />
+				<c:set var="pageName" value="actionInfoIdentify" scope="request" />
 				<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
 				<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
 				<c:import url="paging.jsp" />

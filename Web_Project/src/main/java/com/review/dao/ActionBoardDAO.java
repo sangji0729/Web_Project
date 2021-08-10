@@ -225,13 +225,14 @@ public class ActionBoardDAO {
 		int result = 0;
 		Connection conn = DBConnection.dbConnection();
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE Action SET atitle=?, acontent=? WHERE ano=?";
+		String sql = "UPDATE Action SET atitle=?, acontent=? WHERE ano=? AND no=(SELECT no FROM Login WHERE id=?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, (String)map.get("title"));
 			pstmt.setString(2, (String)map.get("content"));
 			pstmt.setInt(3, (int)map.get("ano"));
+			pstmt.setString(4, (String)map.get("id"));
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -342,46 +343,29 @@ public class ActionBoardDAO {
 		return result;
 	}
 
-	public ArrayList<HashMap<String, Object>> myWriteList(String id, int page) {
-		ArrayList<HashMap<String, Object>> list = null;
-		Connection conn = DBConnection.dbConnection();
+	
+
+	public int modifyFile(HashMap<String, Object> map) {
+		int result = 0;
+		Connection con = DBConnection.dbConnection();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "SELECT * FROM Actionview WHERE no=(SELECT no FROM Login WHERE id=?) LIMIT ?, 5;";
-		
+		String sql = "UPDATE Action SET atitle=?, acontent=?, afilename=?, athumbnail=? WHERE ano=? AND no = (SELECT no FROM Login WHERE id=?)";
+
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setInt(2, page);
-			rs = pstmt.executeQuery();
-			
-			if(rs != null) {
-				list = new ArrayList<HashMap<String,Object>>();
-				while(rs.next()) {
-					HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("totalcount", rs.getInt("totalcount"));
-					map.put("commentcount", rs.getInt("commentcount"));
-					map.put("ano", rs.getInt("ano"));
-					map.put("atitle", rs.getString("atitle"));
-					map.put("acontent", rs.getString("acontent"));
-					map.put("athumbnail", rs.getString("athumbnail"));
-					map.put("adate", rs.getDate("adate"));
-					map.put("aip", rs.getString("aip"));
-					map.put("acount", rs.getInt("acount"));
-					map.put("afilename", rs.getString("afilename"));
-					map.put("no", rs.getInt("no"));
-					map.put("id", rs.getString("id"));
-					map.put("name", rs.getString("name"));
-					list.add(map);
-				}
-			}
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, (String) map.get("title"));
+			pstmt.setString(2, (String) map.get("content"));
+			pstmt.setString(3, (String) map.get("saveFile"));
+			pstmt.setString(4, (String) map.get("thumbnail"));
+			pstmt.setInt(5, (int) map.get("ano"));
+			pstmt.setString(6, (String) map.get("id"));
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			Util.closeAll(null, pstmt, conn);
+		} finally {
+			Util.closeAll(null, pstmt, con);
 		}
-		
-		return list;
+		return result;
 	}
 	
 }

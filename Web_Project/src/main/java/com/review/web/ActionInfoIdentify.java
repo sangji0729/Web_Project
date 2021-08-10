@@ -13,22 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.review.Util.Util;
-import com.review.dao.ActionBoardDAO;
+import com.review.dao.InfoDAO;
 
 
-@WebServlet("/myInfoIdentify")
-public class MyInfoIdentify extends HttpServlet {
+@WebServlet("/actionInfoIdentify")
+public class ActionInfoIdentify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public MyInfoIdentify() {
+    public ActionInfoIdentify() {
         super();
         
     }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//HttpSession session = request.getSession();
+		//System.out.println(session.getAttribute("id") + "!!!!!!!!!!!!!");
+		//System.out.println(session.getAttribute("name")+"$$$$$$$$$$$");
+		doPost(request, response);
 	}
 
 	
@@ -36,23 +39,24 @@ public class MyInfoIdentify extends HttpServlet {
 		HttpSession session = request.getSession();
 		System.out.println(session.getAttribute("id"));
 		System.out.println(session.getAttribute("name"));
-		System.out.println(Util.str2Int(request.getParameter("ano")));
+		
 		
 		int page = 1;
 		if(request.getParameter("page") != null) {
 			page = Util.str2Int(request.getParameter("page"));
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("myInfoIdentify.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("actionInfoIdentify.jsp");
 		if(session.getAttribute("id") != null && session.getAttribute("name") != null) {
 			
 			String id = (String)session.getAttribute("id");
 			//String name = (String)session.getAttribute("name");
+			String table = "Action";
 			
 			ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
 			
-			ActionBoardDAO dao = ActionBoardDAO.getInstance();
-			list = dao.myWriteList(id, (page - 1) * 5);
+			InfoDAO dao = InfoDAO.getInstance();
+			list = dao.actionWriteList(table, id, (page - 1) * 5);
 			
 			request.setAttribute("list", list);
 			

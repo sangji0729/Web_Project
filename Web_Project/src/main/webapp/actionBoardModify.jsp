@@ -40,13 +40,13 @@
 <body>
 	<h1 style="text-align: center;">글 수정</h1>
 	<hr>
-	<form action="./actionBoardModify" method="post" onsubmit="return check();">
+	<form action="./actionBoardModify" method="post" onsubmit="return check();" enctype="multipart/form-data">
 		<div>
 			<input type="text" id="title" name="title" placeholder="제목을 입력해주세요"
 				required="required"value="${map.atitle }"><br>
 			<textarea name="content" id="content" placeholder="내용을 입력하세요.">${map.acontent }</textarea>
 			<input type="hidden" name="ano" value="${map.ano }">
-			<input type="file" name="file1" accept=".gif, .png, .jpg, .jpeg">
+			<input type="file" name="afilename" accept=".gif, .png, .jpg, .jpeg" value="${map.afilename }">
 		</div>
 		<button type="submit">수정</button>
 		<button onclick="location.href='./actionBoard'">취소</button>
