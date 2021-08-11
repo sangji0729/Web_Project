@@ -30,22 +30,33 @@
 		//실행
 	}
 </script>
+<link href="./css/main.css" rel="stylesheet">
+<link href="./css/menu.css" rel="stylesheet">
+<link href="./css/dailyWrite.css" rel="stylesheet">
+<!-- include libraries(jQuery, bootstrap) -->
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- 서머노트 불러오기 -->
 <link href="./summernote/summernote.min.css" rel="stylesheet">
 <script src="./summernote/summernote.min.js"></script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#content').summernote({height : 500
+				});
+		});
+	</script>
 </head>
 <body>
 	<h1 style="text-align: center;">글 작성</h1>
 	<hr>
-	<form action="./actionBoardWrite" method="post"onsubmit="return check();" enctype="multipart/form-data">
+	<form action="./actionBoardWrite" method="post" onsubmit="return check();" enctype="multipart/form-data">
 		<div id="inputbox">
-			<input type="text" id="title" name="title" placeholder="제목을 입력해주세요"
-				required="required"><br>
+			<input type="text" id="title" name="title" placeholder="제목을 입력해주세요" required="required"><br>
 			<textarea name="content" id="content" placeholder="내용을 입력하세요."></textarea>
 			<input type="file" name="file1" accept=".gif, .png, .jpg, .jpeg">
 		</div>
@@ -53,13 +64,6 @@
 		<button onclick="location.href='./actionBord'">취소</button>
 	</form>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#content').summernote({
-				height : 500
-			});
-		});
-	</script>
-
+	
 </body>
 </html>

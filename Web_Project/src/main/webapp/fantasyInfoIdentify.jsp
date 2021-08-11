@@ -94,7 +94,7 @@ ul, li {
 </style>
 </head>
 <body>
-	<h1 style="text-align: center;">Action 게시판 작성한 글 조회</h1>
+	<h1 style="text-align: center;">Fantasy 게시판 작성한 글 조회</h1>
 	<hr>
 	<c:import url="./myinfomenu.jsp" />
 <div id="mainWrapper">
@@ -113,29 +113,29 @@ ul, li {
 			<c:forEach items="${list }" var="l">
 				<li>
 					<ul>
-						<li>${l.ano }</li>
-						<li><a href="./actionBoardDetail?ano=${l.ano }">
+						<li>${l.fno }</li>
+						<li><a href="./fantasyDetail?fno=${l.fno }">
 						 <c:choose>
-									<c:when test="${l.athumbnail eq null }">
+									<c:when test="${l.fthumbnail eq null }">
 										<img alt="no image" src="./img/noimage.jpg"
 											style="vertical-align: middle; height: 100px;">
 									</c:when>
 									<c:otherwise>
-										<img alt="thumb" src="./thumbnail/${l.athumbnail }"
+										<img alt="thumb" src="./thumbnail/${l.fthumbnail }"
 											style="vertical-align: middle; height: 100px;">
 											</c:otherwise>
 								</c:choose>
-						</a> <a href="./actionBoardDetail?ano=${l.ano }">${l.atitle } <c:if
+						</a> <a href="./fantasyDetail?fno=${l.fno }">${l.ftitle } <c:if
 									test="${l.commentcount > 0}">
 									<small> [ 댓글수 : ${l.commentcount } ]</small>
 								</c:if>
-								<c:if test="${l.alike > 0 }">
-								<small>[ 추천수 : ${l.alike } ]</small>
+								<c:if test="${l.flike > 0 }">
+								<small>[ 추천수 : ${l.flike } ]</small>
 								</c:if>
 						</a></li>
-						<li>${l.name }</li>
-						<li>${l.adate }</li>
-						<li>${l.acount }</li>
+						<li>${l.id }</li>
+						<li>${l.fdate }</li>
+						<li>${l.fcount }</li>
 					</ul>
 				</li>
 				<hr>
@@ -144,12 +144,12 @@ ul, li {
 		</ul>
 		</c:when>
 		<c:otherwise>출력할 글이 없습니다.</c:otherwise>
-	</c:choose>
+		</c:choose>
 				<button id="boardreturnbtn" onclick="location.href='./index'">메인메뉴로 돌아가기</button>
 	</div>
 			<div id="paging">
 				<!-- 이동할 때 마다 페이지명을 변수처리 -->
-				<c:set var="pageName" value="actionInfoIdentify" scope="request" />
+				<c:set var="pageName" value="fantasyInfoIdentify" scope="request" />
 				<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
 				<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
 				<c:import url="paging.jsp" />

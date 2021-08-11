@@ -145,6 +145,7 @@ public class ActionBoardModify extends HttpServlet {
 			 * map.put("upFile", file);// 실제 저장한 파일 이름을 여기에 저장
 			 */			
 			
+			
 			int result = 0;
 			if(afilename == null) {
 				result = dao.modify(map);				
@@ -154,7 +155,7 @@ public class ActionBoardModify extends HttpServlet {
 			
 			HashMap<String, Object> log = new HashMap<String, Object>();
 			log.put("id", id);
-			log.put("target", "modify");
+			log.put("target", "ActionBoard");
 
 			if (result == 1) {
 				log.put("etc", "게시물 수정 성공");

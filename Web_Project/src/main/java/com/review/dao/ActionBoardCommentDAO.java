@@ -20,7 +20,7 @@ public class ActionBoardCommentDAO {
 	
 	public int commentWrite(HashMap<String, Object> map) {
 		int result = 0;
-		Connection conn = DBConnection.dbConnection();
+		Connection conn = DBConnection.dbConn();
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO ActionComment (ano, accontent, acip, no) VALUES (?, ?, ?, (SELECT no FROM Login WHERE id=?))";
 		
@@ -44,7 +44,7 @@ public class ActionBoardCommentDAO {
 
 	public int modify(HashMap<String, Object> map) {
 		int result = 0;
-		Connection conn = DBConnection.dbConnection();
+		Connection conn = DBConnection.dbConn();
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE ActionComment SET accontent=? WHERE acno=?";
 		
@@ -64,7 +64,7 @@ public class ActionBoardCommentDAO {
 
 	public int commentDelete(HashMap<String, Object> map) {
 		int result = 0;
-		Connection conn = DBConnection.dbConnection();
+		Connection conn = DBConnection.dbConn();
 		PreparedStatement pstmt = null;
 		String sql = "DELETE FROM ActionComment WHERE acno=? AND no=(SELECT no FROM Login WHERE id=?)";
 		

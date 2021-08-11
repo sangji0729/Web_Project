@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.review.Util.FileThing;
 import com.review.Util.Util;
 import com.review.dao.ActionBoardDAO;
+import com.review.dao.LogDAO;
 
 
 
@@ -67,6 +68,13 @@ public class ActionBoardDelete extends HttpServlet {
 					ft.fileDelete(path + "thumbnail" + File.separator, fileName.get(1));
 				}
 			}
+			//로그남기기
+			HashMap<String, Object> log = new HashMap<String, Object>();
+			log.put("id", id);
+			log.put("target", "ActionBoard");
+			log.put("etc", "게시글 삭제 성공");
+			log.put("ip", Util.getIP(request));
+			LogDAO.insertLog(log);
 			
 			int result = dao.delete(map);
 			

@@ -20,8 +20,8 @@ public class LoginDAO {
 	}
 
 	public HashMap<String, Object> login(String id, String pw) {
-		HashMap<String, Object> login = null;
-		Connection conn = DBConnection.dbConnection();
+		HashMap<String, Object> login = new HashMap<String, Object>();
+		Connection conn = DBConnection.dbConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "SELECT id, pw, name, grade FROM Login WHERE id=? AND pw=? AND grade BETWEEN 1 AND 2";
@@ -33,7 +33,6 @@ public class LoginDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs != null) {
-				login = new HashMap<String, Object>();
 				while(rs.next()) {
 					login.put("id", rs.getString("id"));
 					login.put("pw", rs.getString("pw"));
@@ -47,6 +46,9 @@ public class LoginDAO {
 		}finally {
 			Util.closeAll(rs, pstmt, conn);
 		}
+		
+		if (login.size() <= 0)
+			return null;
 		
 		return login;
 	}

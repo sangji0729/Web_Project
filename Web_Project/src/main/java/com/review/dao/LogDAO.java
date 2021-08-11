@@ -11,7 +11,7 @@ import com.review.Util.Util;
 public class LogDAO {
 
 	public static void insertLog(HashMap<String, Object> log) {
-		Connection conn = DBConnection.dbConnection();
+		Connection conn = DBConnection.dbConn();
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO Log (log_id, log_target, log_etc, log_ip) VALUES (?, ?, ?, ?)";
 		

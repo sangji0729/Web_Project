@@ -27,6 +27,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		System.out.println("this is get request");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +35,7 @@ public class Login extends HttpServlet {
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 
+		
 		LoginDAO dao = LoginDAO.getInstance();
 
 		HashMap<String, Object> member = dao.login(id, pw);
@@ -43,10 +45,12 @@ public class Login extends HttpServlet {
 			session.setAttribute("id", member.get("id"));
 			session.setAttribute("pw", member.get("pw"));
 			session.setAttribute("name", member.get("name"));
-
+			
 			// 관리자등급 = 1, 일반등급 = 2
-			if ((int) member.get("grade") == 1) {
-				session.setAttribute("grade", member.get("grade"));
+			if (member.containsKey("grade")) {
+				if ((int) member.get("grade") == 1) {
+					session.setAttribute("grade", member.get("grade"));
+				}
 			}
 			System.out.println("로그인한 아이디 : " + session.getAttribute("id"));
 			System.out.println("로그인한 이름 : " + session.getAttribute("name"));
@@ -65,7 +69,9 @@ public class Login extends HttpServlet {
 			response.sendRedirect("./actionBoard");
 
 		} else {
-			response.sendRedirect("./login");
+			
+			
+			response.sendRedirect("./login.jsp");
 		}
 
 	}

@@ -87,8 +87,7 @@ ul, li {
 #ulTable>li>ul>li:first-child+li+li+li+li {
 	width: 10%;
 }
-
-#paging {
+#paging{
 	margin: 0 auto;
 	padding: 0;
 	vertical-align: middle;
@@ -99,7 +98,7 @@ ul, li {
 
 </head>
 <body>
-	<h1 style="text-align: center;">액션</h1>
+	<h1 style="text-align: center;">글 검색</h1>
 	<hr>
 	<br>
 
@@ -109,13 +108,15 @@ ul, li {
 	<c:if test="${sessionScope.id ne null }">
 		<button onclick="location.href='./logout'">로그아웃</button>
 		<div>
-			<button onclick="location.href='./myinfomenu.jsp'">My Info</button>
-
+		<button onclick="location.href='./myinfomenu.jsp'">My Info</button>
+		
 		</div>
 	</c:if>
-
+	
 	<hr>
 	<div id="mainWrapper">
+	<c:choose>
+	<c:when test="${fn:length(list) > 0 }">
 		<ul id="ulTable">
 			<li>
 				<ul>
@@ -130,7 +131,8 @@ ul, li {
 				<li>
 					<ul>
 						<li>${l.ano }</li>
-						<li><a href="./actionBoardDetail?ano=${l.ano }"> <c:choose>
+						<li><a href="./actionBoardDetail?ano=${l.ano }">
+						 <c:choose>
 									<c:when test="${l.athumbnail eq null }">
 										<img alt="no image" src="./img/noimage.jpg"
 											style="vertical-align: middle; height: 100px;">
@@ -138,14 +140,15 @@ ul, li {
 									<c:otherwise>
 										<img alt="thumb" src="./thumbnail/${l.athumbnail }"
 											style="vertical-align: middle; height: 100px;">
-
-									</c:otherwise>
+										
+											</c:otherwise>
 								</c:choose>
 						</a> <a href="./actionBoardDetail?ano=${l.ano }">${l.atitle } <c:if
 									test="${l.commentcount > 0}">
 									<small> [ 댓글수 : ${l.commentcount } ]</small>
-								</c:if> <c:if test="${l.alike > 0 }">
-									<small>[ 추천수 : ${l.alike } ]</small>
+								</c:if>
+								<c:if test="${l.alike > 0 }">
+								<small>[ 추천수 : ${l.alike } ]</small>
 								</c:if>
 						</a></li>
 						<li>${l.name }</li>
@@ -159,8 +162,11 @@ ul, li {
 			<c:if test="${sessionScope.id ne null }">
 				<button id="writebtn" onclick="location.href='./actionBoardWrite'">글작성</button>
 			</c:if>
-
+			
 		</ul>
+		</c:when>
+		<c:otherwise>출력할 글이 없습니다</c:otherwise>
+		</c:choose>
 		<div id="searchdiv">
 			<form action="./actionBoardSearch" method="post">
 				<select name="search">
@@ -185,19 +191,19 @@ ul, li {
 
 				<button type="submit">검색</button>
 			</form>
+			<button onclick="location.href='actionBoard'">게시판으로 돌아가기</button>
 		</div>
-
 	</div>
-	<div id="paging">
-		<!-- 이동할 때 마다 페이지명을 변수처리 -->
-		<c:set var="pageName" value="actionBoard" scope="request" />
-		<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
-		<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
-		<c:import url="paging.jsp" />
+			<div id="paging">
+				<!-- 이동할 때 마다 페이지명을 변수처리 -->
+				<c:set var="pageName" value="actionBoard" scope="request" />
+				<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
+				<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
+				<c:import url="paging.jsp" />
 
-		<!-- 전체페이지 : ${totalPage } / 페이지 : ${page } / 시작 : / 끝 :<br> -->
+				<!-- 전체페이지 : ${totalPage } / 페이지 : ${page } / 시작 : / 끝 :<br> -->
 
-	</div>
+			</div>
 
 
 </body>

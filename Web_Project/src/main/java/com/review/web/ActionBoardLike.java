@@ -53,8 +53,13 @@ public class ActionBoardLike extends HttpServlet {
 			map.put("aip", Util.getIP(request));
 			ActionBoardDAO dao = ActionBoardDAO.getInstance();
 			
-			int result = dao.LikeUpCheck(map);
+			int result = 0; 
 			
+			boolean available = dao.likeUpAvailable(map);
+			
+			if(available == true) {
+				result = dao.LikeUpCheck(map);
+			}
 			if(result == 1) {
 				result = dao.likeUp(map);
 				if(result == 1) {
