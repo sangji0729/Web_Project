@@ -43,6 +43,7 @@
 				id="pw" name="pw" required="required" placeholder="비밀번호를 입력하세요">
 			<button id="loginbtn">로그인</button>
 		</form>
+		<button onclick="location.href='./join.jsp'">회원가입</button>
 	</div>
 </body>
 </html>

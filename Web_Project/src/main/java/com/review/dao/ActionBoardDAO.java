@@ -437,4 +437,25 @@ public class ActionBoardDAO {
 		return true;
 	}
 
+	public int join(HashMap<String, Object> map) {
+		int result = 0;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO Login (id, name, pw, email) VALUES (?, ?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String)map.get("id"));
+			pstmt.setString(2, (String)map.get("name"));
+			pstmt.setString(3, (String)map.get("pw"));
+			pstmt.setString(4, (String)map.get("email"));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {	
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(null, pstmt, conn);
+		}
+		return result;
+	}
+
 }
