@@ -7,6 +7,8 @@
 <title>회원가입</title>
 <style type="text/css">
 #joinbox{
+	margin: 0 auto;
+	padding: 0;
 	text-align: center;
 }
 </style>
@@ -18,7 +20,10 @@
 		ID  <input type="text" id="id" name="id"><br>
 		비밀번호 <input type="password" id="pw" name="pw"><br>
 		이름 <input type="text" id="name" name="name"><br>
-		E-mail <input type="email" id="email" name="email"><br>
+		E-mail <input type="email" id="email" name="email">
+		<button>메일 인증하기</button>
+		<br>
+		E-mail 인증 <input type="email" id="emailAuthor" name="emailAuthor">
 		<button type="submit">회원가입</button>	
 	</form>
 </div>

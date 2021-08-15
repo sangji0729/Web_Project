@@ -52,7 +52,11 @@ public class Join extends HttpServlet {
 			if(result == 1) {
 				
 				response.sendRedirect("./joinAction.jsp");
+			}else {
+				response.sendRedirect("./join.jsp");
 			}
+		}else {
+			response.sendRedirect("./error?code=joinError");
 		}
 	}
 

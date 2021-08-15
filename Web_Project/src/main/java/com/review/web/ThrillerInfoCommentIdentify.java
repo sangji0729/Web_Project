@@ -16,46 +16,38 @@ import com.review.Util.Util;
 import com.review.dao.InfoDAO;
 
 
-@WebServlet("/actionInfoIdentify")
-public class ActionInfoIdentify extends HttpServlet {
+@WebServlet("/thrillerInfoCommentIdentify")
+public class ThrillerInfoCommentIdentify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public ActionInfoIdentify() {
+    public ThrillerInfoCommentIdentify() {
         super();
-        
+       
     }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//HttpSession session = request.getSession();
-		//System.out.println(session.getAttribute("id") + "!!!!!!!!!!!!!");
-		//System.out.println(session.getAttribute("name")+"$$$$$$$$$$$");
 		doPost(request, response);
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//System.out.println(session.getAttribute("id"));
-		//System.out.println(session.getAttribute("name"));
-		
 		int page = 1;
 		if(request.getParameter("page") != null) {
 			page = Util.str2Int(request.getParameter("page"));
 		}
+		RequestDispatcher rd = request.getRequestDispatcher("thrillerInfoCommentIdentify.jsp");
 		
-		RequestDispatcher rd = request.getRequestDispatcher("actionInfoIdentify.jsp");
 		if(session.getAttribute("id") != null && session.getAttribute("name") != null) {
-			
 			String id = (String)session.getAttribute("id");
-			//String name = (String)session.getAttribute("name");
-			String table = "Action";
+			String table = "ThrillerComment";
 			
 			ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
 			InfoDAO dao = InfoDAO.getInstance();
 			
-			list = dao.actionWriteList(table, id, (page - 1) * 5);
+			list = dao.thrillerCommentWriteList(table, id, (page - 1) * 5);
 			
 			request.setAttribute("list", list);
 			
@@ -65,6 +57,7 @@ public class ActionInfoIdentify extends HttpServlet {
 			
 			request.setAttribute("page", page);
 			rd.forward(request, response);
-			}
+		}
 	}
+
 }

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>작성한 글 조회</title>
+<title>작성한 댓글 조회</title>
 <style type="text/css">
 a:link {
 	text-decoration: none;
@@ -94,48 +94,30 @@ ul, li {
 </style>
 </head>
 <body>
-	<h1 style="text-align: center;">Action 게시판 작성한 글 조회</h1>
+	<h1 style="text-align: center;">Fantasy 게시판 작성한 댓글 조회</h1>
 	<hr>
-	<c:import url="./myinfomenu.jsp" />
+	<c:import url="./myCommentMenu.jsp" />
 <div id="mainWrapper">
 <c:choose>
 <c:when test="${fn:length(list) > 0 }">
 		<ul id="ulTable">
 			<li>
 				<ul>
+					<li>댓글 번호</li>
+					<li>댓글 작성 내용</li>
 					<li>글 번호</li>
-					<li>제목</li>
 					<li>글쓴이</li>
 					<li>날짜</li>
-					<li>조회수</li>
 				</ul>
 			</li>
 			<c:forEach items="${list }" var="l">
 				<li>
 					<ul>
-						<li>${l.ano }</li>
-						<li><a href="./actionBoardDetail?ano=${l.ano }">
-						 <c:choose>
-									<c:when test="${l.athumbnail eq null }">
-										<img alt="no image" src="./img/noimage.jpg"
-											style="vertical-align: middle; height: 100px;">
-									</c:when>
-									<c:otherwise>
-										<img alt="thumb" src="./thumbnail/${l.athumbnail }"
-											style="vertical-align: middle; height: 100px;">
-											</c:otherwise>
-								</c:choose>
-						</a> <a href="./actionBoardDetail?ano=${l.ano }">${l.atitle } <c:if
-									test="${l.commentcount > 0}">
-									<small> [ 댓글수 : ${l.commentcount } ]</small>
-								</c:if>
-								<c:if test="${l.alike > 0 }">
-								<small>[ 추천수 : ${l.alike } ]</small>
-								</c:if>
-						</a></li>
+						<li>${l.fcno }</li>
+						<li><a href="./fantasyDetail?fno=${l.fno }">${l.fccontent }</a></li>
+						<li>${l.fno }</li>
 						<li>${l.name }</li>
-						<li>${l.adate }</li>
-						<li>${l.acount }</li>
+						<li>${l.fcdate }</li>
 					</ul>
 				</li>
 				<hr>
@@ -143,13 +125,13 @@ ul, li {
 			</c:forEach>
 		</ul>
 		</c:when>
-		<c:otherwise>출력할 글이 없습니다.</c:otherwise>
+		<c:otherwise>출력할 댓글이 없습니다.</c:otherwise>
 	</c:choose>
 				<button id="boardreturnbtn" onclick="location.href='./index'">메인메뉴로 돌아가기</button>
 	</div>
 			<div id="paging">
 				<!-- 이동할 때 마다 페이지명을 변수처리 -->
-				<c:set var="pageName" value="actionInfoIdentify" scope="request" />
+				<c:set var="pageName" value="fantasyInfoCommentIdentify" scope="request" />
 				<c:set var="PAGENUMBER" value="5" scope="request"></c:set>
 				<!-- 페이징 설정/변수생성 구문 모두 다 여기로 이동시킵니다 -->
 				<c:import url="paging.jsp" />

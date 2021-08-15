@@ -313,5 +313,257 @@ public class InfoDAO {
 		
 		return list;
 	}
+
+
+	public ArrayList<HashMap<String, Object>> actionCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "ac.acno, ac.ano, ac.no, ac.accontent, ac.acdate, ac.acip, "
+				+ "l2.id, l2.name FROM "+table+" ac JOIN Login l2 ON ac.no = l2.NO "
+				+ "WHERE ac.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY ac.acno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("acno", rs.getInt("acno"));
+					map.put("ano", rs.getInt("ano"));
+					map.put("no", rs.getInt("no"));
+					map.put("accontent", rs.getString("accontent"));
+					map.put("acdate", rs.getString("acdate"));
+					map.put("acip", rs.getString("acip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> dailyCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "dac.dacno, dac.dano, dac.no, dac.daccontent, dac.dacdate, dac.dacip, "
+				+ "l2.id, l2.name FROM "+table+" dac JOIN Login l2 ON dac.no = l2.NO "
+				+ "WHERE dac.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY dac.dacno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("dacno", rs.getInt("dacno"));
+					map.put("dano", rs.getInt("dano"));
+					map.put("no", rs.getInt("no"));
+					map.put("daccontent", rs.getString("daccontent"));
+					map.put("dacdate", rs.getString("dacdate"));
+					map.put("dacip", rs.getString("dacip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> dramaCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "dc.dcno, dc.dno, dc.no, dc.dccontent, dc.dcdate, dc.dcip, "
+				+ "l2.id, l2.name FROM "+table+" dc JOIN Login l2 ON dc.no = l2.NO "
+				+ "WHERE dc.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY dc.dcno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("dcno", rs.getInt("dcno"));
+					map.put("dno", rs.getInt("dno"));
+					map.put("no", rs.getInt("no"));
+					map.put("dccontent", rs.getString("dccontent"));
+					map.put("dcdate", rs.getString("dcdate"));
+					map.put("dcip", rs.getString("dcip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> fantasyCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "fc.fcno, fc.fno, fc.no, fc.fccontent, fc.fcdate, fc.fcip, "
+				+ "l2.id, l2.name FROM "+table+" fc JOIN Login l2 ON fc.no = l2.NO "
+				+ "WHERE fc.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY fc.fcno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("fcno", rs.getInt("fcno"));
+					map.put("fno", rs.getInt("fno"));
+					map.put("no", rs.getInt("no"));
+					map.put("fccontent", rs.getString("fccontent"));
+					map.put("fcdate", rs.getString("fcdate"));
+					map.put("fcip", rs.getString("fcip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> romanceCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "rc.rcno, rc.rno, rc.no, rc.rccontent, rc.rcdate, rc.rcip, "
+				+ "l2.id, l2.name FROM "+table+" rc JOIN Login l2 ON rc.no = l2.NO "
+				+ "WHERE rc.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY rc.rcno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("rcno", rs.getInt("rcno"));
+					map.put("rno", rs.getInt("rno"));
+					map.put("no", rs.getInt("no"));
+					map.put("rccontent", rs.getString("rccontent"));
+					map.put("rcdate", rs.getString("rcdate"));
+					map.put("rcip", rs.getString("rcip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> thrillerCommentWriteList(String table, String id, int page) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = DBConnection.dbConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT (SELECT count(*) FROM "+table+" WHERE no=(SELECT l.no FROM Login l WHERE l.id=?)) AS totalcount, "
+				+ "tc.tcno, tc.tno, tc.no, tc.tccontent, tc.tcdate, tc.tcip, "
+				+ "l2.id, l2.name FROM "+table+" tc JOIN Login l2 ON tc.no = l2.NO "
+				+ "WHERE tc.no=(SELECT l3.no FROM Login l3 WHERE l3.id=?) ORDER BY tc.tcno "
+				+ "DESC LIMIT ?, 5;";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, page);
+			rs = pstmt.executeQuery();
+			if(rs != null) {
+				list = new ArrayList<HashMap<String,Object>>();
+				while(rs.next()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("totalcount", rs.getInt("totalcount"));
+					map.put("tcno", rs.getInt("tcno"));
+					map.put("tno", rs.getInt("tno"));
+					map.put("no", rs.getInt("no"));
+					map.put("tccontent", rs.getString("tccontent"));
+					map.put("tcdate", rs.getString("tcdate"));
+					map.put("tcip", rs.getString("tcip"));
+					map.put("id", rs.getString("id"));
+					map.put("name", rs.getString("name"));
+					list.add(map);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			Util.closeAll(rs, pstmt, conn);
+		}
+		return list;
+	}
 	
 }
